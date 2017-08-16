@@ -8,7 +8,7 @@ from collections import namedtuple
 Batch = namedtuple('Batch', ['data'])
 
 # Load the symbols for the networks
-with open('synset_chinese.txt', 'r') as f:
+with open('synset.txt', 'r') as f:
     synsets = [l.rstrip() for l in f]
 
 # Load the network parameters

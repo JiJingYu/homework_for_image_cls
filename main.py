@@ -3,28 +3,32 @@ import inception_predict
 import time
 
 if __name__ == '__main__':
-    cap = cv2.VideoCapture(0)
-
     num = 0
     while True:
+        cmd = raw_input("please input the command!!\n")
+
+        cap = cv2.VideoCapture(0)
+        ##default is 640x480
+        w, h = (1280, 720)
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, w)
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
+        cap.read()
         ret, img = cap.read()
+        cap.release()
 
-        # w, h = (1080, 720)
-        # cap.set(cv2.CAP_PROP_FRAME_WIDTH, w)
-        # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
-
+        n_top = inception_predict.predict_from_array(img, inception_predict.mod, inception_predict.synsets)
+        #print(n_top)
+        #n_top_str = "\n".join([str(cls) for cls in n_top])
+        #font = cv2.FONT_HERSHEY_TRIPLEX
+        #cv2.putText(img, n_top_str, (10, 500), font, 1, (0, 0, 0), 1, False)
         cv2.imshow("camera", img)
-
         key = 0xFF & cv2.waitKey(10)
-        inception_predict.predict_from_array(img, inception_predict.mod, inception_predict.synsets)
-        time.sleep(5)
-        if key == 27:
-            break
-        if key == ord(' '):
-            num = num + 1
+
+        if cmd == 's':
             filename = "frames_%s.jpg" % num
             cv2.imwrite(filename, img)
-        if num == 30:
+            num += 1
+        if cmd == 'q':
             break
 
     cv2.destroyAllWindows()
