@@ -12,7 +12,6 @@ if __name__ == '__main__':
         # w, h = (1080, 720)
         # cap.set(cv2.CAP_PROP_FRAME_WIDTH, w)
         # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
-
         cv2.imshow("camera", img)
 
         key = 0xFF & cv2.waitKey(10)
