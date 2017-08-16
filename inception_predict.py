@@ -8,7 +8,7 @@ from collections import namedtuple
 Batch = namedtuple('Batch', ['data'])
 
 # Load the symbols for the networks
-with open('synset.txt', 'r') as f:
+with open('synset_chinese.txt', 'r') as f:
     synsets = [l.rstrip() for l in f]
 
 # Load the network parameters
@@ -33,7 +33,7 @@ python list of top N predicted objects and corresponding probabilities
 '''
 def predict(filename, mod, synsets, N=5):
     tic = time.time()
-    #img = cv2.cvtColor(cv2.imread(filename), cv2.COLOR_BGR2RGB)
+    # img = cv2.cvtColor(cv2.imread(filename), cv2.COLOR_BGR2RGB)
     img = cv2.imread(filename)
     if img is None:
         print("Image Load failed !!")
@@ -59,6 +59,29 @@ def predict(filename, mod, synsets, N=5):
     return topN
 
 
+def predict_from_array(arr, mod, synsets, N=5):
+    tic = time.time()
+    # img = cv2.cvtColor(cv2.imread(filename), cv2.COLOR_BGR2RGB)
+    img = cv2.resize(arr, (224, 224))
+    img = np.swapaxes(img, 0, 2)
+    img = np.swapaxes(img, 1, 2)
+    img = img[np.newaxis, :]
+    print("pre-processed image in " + str(time.time() - tic))
+
+    toc = time.time()
+    mod.forward(Batch([mx.nd.array(img)]))
+    prob = mod.get_outputs()[0].asnumpy()
+    prob = np.squeeze(prob)
+    print("forward pass in " + str(time.time() - toc))
+
+    topN = []
+    a = np.argsort(prob)[::-1]
+    for i in a[0:N]:
+        print('probability=%f, class=%s' % (prob[i], synsets[i]))
+        topN.append((prob[i], synsets[i]))
+    return topN
+
+
 # Code to download an image from the internet and run a prediction on it
 def predict_from_url(url, N=5):
     filename = url.split("/")[-1]
@@ -74,5 +97,5 @@ def predict_from_local_file(filename, N=5):
     return predict(filename, mod, synsets, N)
 
 if __name__=="__main__":
-    filename = "./time.jpg"
+    filename = "./cat.jpeg"
     predict_from_local_file(filename)

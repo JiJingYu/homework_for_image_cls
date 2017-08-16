@@ -1,12 +1,12 @@
 import cv2
-  
-import time  
-  
+import inception_predict
+import time
+
 if __name__ == '__main__':
     cap = cv2.VideoCapture(0)
-   
+
     num = 0
-    while True:  
+    while True:
         ret, img = cap.read()
 
         # w, h = (1080, 720)
@@ -16,10 +16,12 @@ if __name__ == '__main__':
         cv2.imshow("camera", img)
 
         key = 0xFF & cv2.waitKey(10)
-        if key == 27:  
-            break  
-        if key == ord(' '):  
-            num = num+1  
+        inception_predict.predict_from_array(img, inception_predict.mod, inception_predict.synsets)
+        time.sleep(5)
+        if key == 27:
+            break
+        if key == ord(' '):
+            num = num + 1
             filename = "frames_%s.jpg" % num
             cv2.imwrite(filename, img)
         if num == 30:
