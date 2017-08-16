@@ -17,10 +17,13 @@ if __name__ == '__main__':
         cap.release()
 
         n_top = inception_predict.predict_from_array(img, inception_predict.mod, inception_predict.synsets)
-        #print(n_top)
-        #n_top_str = "\n".join([str(cls) for cls in n_top])
-        #font = cv2.FONT_HERSHEY_TRIPLEX
-        #cv2.putText(img, n_top_str, (10, 500), font, 1, (0, 0, 0), 1, False)
+        print(n_top)
+        n_top_str = "\n".join([str(cls) for cls in n_top])
+
+        y0, dy = 500, 25
+        for i, txt in enumerate(n_top_str.split('\n')):
+            y = y0 + i * dy
+            cv2.putText(img, txt, (50, y), cv2.FONT_HERSHEY_SIMPLEX, .6, (0, 0, 255), 2, 2)
         cv2.imshow("camera", img)
         key = 0xFF & cv2.waitKey(10)
 

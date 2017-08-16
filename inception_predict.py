@@ -33,8 +33,8 @@ python list of top N predicted objects and corresponding probabilities
 '''
 def predict(filename, mod, synsets, N=5):
     tic = time.time()
-    # img = cv2.cvtColor(cv2.imread(filename), cv2.COLOR_BGR2RGB)
-    img = cv2.imread(filename)
+    img = cv2.cvtColor(cv2.imread(filename), cv2.COLOR_BGR2RGB)
+    #img = cv2.imread(filename)
     if img is None:
         print("Image Load failed !!")
         return None
