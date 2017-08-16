@@ -36,19 +36,19 @@ def predict(filename, mod, synsets, N=5):
     #img = cv2.cvtColor(cv2.imread(filename), cv2.COLOR_BGR2RGB)
     img = cv2.imread(filename)
     if img is None:
-        print "Image Load failed !!"
+        print("Image Load failed !!")
         return None
     img = cv2.resize(img, (224, 224))
     img = np.swapaxes(img, 0, 2)
     img = np.swapaxes(img, 1, 2)
     img = img[np.newaxis, :]
-    print "pre-processed image in "+str(time.time()-tic)
+    print("pre-processed image in "+str(time.time()-tic))
  
     toc = time.time()
     mod.forward(Batch([mx.nd.array(img)]))
     prob = mod.get_outputs()[0].asnumpy()
     prob = np.squeeze(prob)
-    print "forward pass in "+str(time.time()-toc)
+    print("forward pass in "+str(time.time()-toc))
  
  
     topN = []
@@ -65,7 +65,7 @@ def predict_from_url(url, N=5):
     urllib.urlretrieve(url, filename)
     img = cv2.imread(filename)
     if img is None:
-        print "Failed to download"
+        print("Failed to download")
     else:
         return predict(filename, mod, synsets, N)
 
