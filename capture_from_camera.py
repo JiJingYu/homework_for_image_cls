@@ -1,27 +1,23 @@
-import cv2.cv as cv  
+import cv2
   
 import time  
   
-if __name__ == '__main__':  
-  
-    cv.NamedWindow("camera",1)  
-    capture = cv.CaptureFromCAM(0)
+if __name__ == '__main__':
+    cap = cv2.VideoCapture(0)
    
-    num = 0;  
+    num = 0
     while True:  
-        img = cv.QueryFrame(capture)  
-        cv.ShowImage("camera",img)  
-  
-        key = cv.WaitKey(10)  
+        ret, img = cap.read()
+        cv2.imshow("camera",img)
+
+        key = 0xFF & cv2.waitKey(10)
         if key == 27:  
             break  
         if key == ord(' '):  
             num = num+1  
-            filename = "frmaes_%s.jpg" % num  
-            cv.SaveImage(filename,img)
+            filename = "frames_%s.jpg" % num
+            cv2.imwrite(filename,img)
         if num == 30:
             break
-  
-  
-    del(capture)  
-    cv.DestroyWindow("camera")
+
+    cv2.destroyAllWindows()
