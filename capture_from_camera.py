@@ -4,18 +4,19 @@ import time
   
 if __name__ == '__main__':
     cap = cv2.VideoCapture(0)
-   
+    # w, h = (640.0, 480.0)
+    w, h = (1280, 720)
+    if cv2.__version__[0]=='2':
+        cap.set(3, w)
+        cap.set(4, h)
+    else:
+	cap.set(cv2.CAP_PROP_FRAME_WIDTH, w)
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
     num = 0
     while True:  
         ret, img = cap.read()
 	
-        w, h = (640, 480)
-	if cv2.__version__[0]=='2':
-            cap.set(3, w)
-            cap.set(4, h)
-	else:
-	    cap.set(cv2.CAP_PROP_FRAME_WIDTH, w)
-            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
+        
 
         cv2.imshow("camera", img)
 
