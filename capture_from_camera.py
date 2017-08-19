@@ -1,6 +1,5 @@
 import cv2
-  
-import time  
+
   
 if __name__ == '__main__':
     cap = cv2.VideoCapture(0)
@@ -13,13 +12,10 @@ if __name__ == '__main__':
 	cap.set(cv2.CAP_PROP_FRAME_WIDTH, w)
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
     num = 0
-    while True:  
+    while True:
         ret, img = cap.read()
-	
-        
-
+            
         cv2.imshow("camera", img)
-
         key = 0xFF & cv2.waitKey(10)
         if key == 27:  
             break  
