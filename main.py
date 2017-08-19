@@ -10,8 +10,8 @@ if __name__ == '__main__':
         cap = cv2.VideoCapture(0)
         ##default is 640x480
         w, h = (1280, 720)
-        cap.set(cv2.CAP_PROP_FRAME_WIDTH, w)
-        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
+        #cap.set(cv2.CV_CAP_PROP_FRAME_WIDTH, w)
+        #cap.set(cv2.CV_CAP_PROP_FRAME_HEIGHT, h)
         cap.read()
         ret, img = cap.read()
         cap.release()

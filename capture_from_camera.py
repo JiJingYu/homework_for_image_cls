@@ -8,10 +8,15 @@ if __name__ == '__main__':
     num = 0
     while True:  
         ret, img = cap.read()
+	
+        w, h = (640, 480)
+	if cv2.__version__[0]=='2':
+            cap.set(3, w)
+            cap.set(4, h)
+	else:
+	    cap.set(cv2.CAP_PROP_FRAME_WIDTH, w)
+            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
 
-        # w, h = (1080, 720)
-        # cap.set(cv2.CAP_PROP_FRAME_WIDTH, w)
-        # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
         cv2.imshow("camera", img)
 
         key = 0xFF & cv2.waitKey(10)
